@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mai bine citesti aici sus ca-mi bei coaiele, decat sa mi le bei dupa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background-color: #111827;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        #chat-container {
+            background-color: #1f2937;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 28rem;
+            transition: opacity 0.4s ease;
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            background-color: #374151;
+            color: #ffffff;
+            border: 1px solid #4b5563;
+            font-size: 1.125rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            outline: none;
+        }
+        input:focus {
+            border-color: #3b82f6;
+        }
+        button {
+            width: 100%;
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        #final-message {
+            display: none;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            color: #60a5fa;
+            text-align: center;
+            padding: 1rem;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #final-message.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <h1>Să începem, cum te numești?</h1>
+    <input type="text" id="name-input" placeholder="Introdu numele..." autocomplete="off" autofocus>
+    <button id="submit-btn">Trimite</button>
+</div>
+
+<div id="final-message"></div>
+
+<script>
+    const chatContainer = document.getElementById('chat-container');
+    const nameInput = document.getElementById('name-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const finalMessage = document.getElementById('final-message');
+
+    function showGreeting() {
+        const name = nameInput.value.trim();
+        if (!name) return;
+
+        chatContainer.style.opacity = '0';
+        chatContainer.style.pointerEvents = 'none';
+
+        setTimeout(() => {
+            chatContainer.style.display = 'none';
+            finalMessage.textContent = `SĂ-MI BEI COAIELE, ${name.toUpperCase()}!`;
+            finalMessage.style.display = 'block';
+
+            requestAnimationFrame(() => {
+                finalMessage.classList.add('show');
+            });
+        }, 400);
+    }
+
+    submitBtn.addEventListener('click', showGreeting);
+    nameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') showGreeting();
+    });
+</script>
+</body>
+</html>
